@@ -1,0 +1,900 @@
+Dish Delight is a popular hotel platform designed to provide detailed information about each dish, including dish name, cuisine, price, and rating. The platform offers various functionalities using Java streams to enhance user experience. 
+
+Create a Java application that uses streams to perform the same task.
+
+Requirement:
+Retrieve the dish details by a specified cuisine.
+
+Component Specification: Dish (POJO Class)
+
+
+Type(Class)
+ 
+Attributes
+ 
+Methods
+ 
+
+Dish
+ 
+String dishName
+
+String cuisine
+
+double price
+
+double rating
+ 
+Getters and setters, toString, no-argument, and four-argument constructors are given in the code skeleton.
+ 
+
+
+
+
+Component Specification: DishUtil (Utility class)
+
+
+Type(Class)
+ 
+Methods
+ 
+Responsibilities
+ 
+
+DishUtil
+ 
+public List<Dish> getDishesByCuisine(Stream<Dish> dishStream, String cuisine)
+ 
+This method takes a stream of Dish objects and a cuisine as input parameters. It returns a list of dishes that belong to the specified cuisine by filtering the dishes from the provided stream.
+
+Condition:
+
+
+cuisine is case-insensitive
+ 
+
+
+
+
+The main method in the UserInterface class gets the total number of dishes and their details from the user, creates Dish objects, stores them in a list, and performs various operations based on user input.
+
+Get the cuisine from the user. Then invokes the getDishesByCuisine method in the DishUtil class to filter dishes by the specified cuisine. If dishes are found, they are displayed using the toString() method as shown in the sample output. If no dishes are found, it prints "No dishes were found for the given cuisine <cuisine>".
+
+Assumptions:
+The number of dishes needed to be entered into the list is always a valid positive number.
+The dish details provided by the user are always valid.
+
+Note:
+In the sample input / output provided, thehighlighted text in bold corresponds to the input given by the user, andthe rest of the text represents the output.
+Ensure to follow the object-oriented specifications provided in the question description. 
+Ensure to provide the names for classes, attributes, and methods as specified in the question description.
+Adhere to the code template, if provided.
+Do not use System.exit(0) toterminate the code.
+
+ 
+
+Sample Input / Output 1
+
+Enter the number of dishes
+
+5
+
+Enter the dish details
+
+Hamburger:American:8.50:4.5
+
+Paella:Spanish:16.00:4.7
+
+Dim Sum:Chinese:11.50:4.3
+
+Poutine:Canadian:7.99:4.1
+
+Souvlaki:Greek:10.99:4.6
+
+Enter the cuisine
+
+Chinese
+
+Dishes of cuisine Chinese are
+
+Dim Sum|Chinese|11.5|4.3
+
+ 
+
+Sample Input / Output 2
+
+Enter the number of dishes
+
+2
+
+Enter the dish details
+
+Tagine:Moroccan:15.50:4.5
+
+Schnitzel:German:13.50:4.4
+
+Enter the cuisine
+
+American
+
+No dishes were found for the given cuisine American
+Copilot
+Sent by Copilot:
+Sure, I can help you create a Java application that meets your requirements. Below is the implementation of the Dish class, DishUtil class, and the UserInterface class.
+
+Dish.java
+Java
+
+public class Dish {
+    private String dishName;
+    private String cuisine;
+    private double price;
+    private double rating;
+
+    // No-argument constructor
+    public Dish() {}
+
+    // Four-argument constructor
+    public Dish(String dishName, String cuisine, double price, double rating) {
+        this.dishName = dishName;
+        this.cuisine = cuisine;
+        this.price = price;
+        this.rating = rating;
+    }
+
+    // Getters and setters
+    public String getDishName() {
+        return dishName;
+    }
+
+    public void setDishName(String dishName) {
+        this.dishName = dishName;
+    }
+
+    public String getCuisine() {
+        return cuisine;
+    }
+
+    public void setCuisine(String cuisine) {
+        this.cuisine = cuisine;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return dishName + "|" + cuisine + "|" + price + "|" + rating;
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+DishUtil.java
+Java
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class DishUtil {
+    public List<Dish> getDishesByCuisine(Stream<Dish> dishStream, String cuisine) {
+        return dishStream
+                .filter(dish -> dish.getCuisine().equalsIgnoreCase(cuisine))
+                .collect(Collectors.toList());
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+UserInterface.java
+Java
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Stream;
+
+public class UserInterface {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        DishUtil dishUtil = new DishUtil();
+
+        System.out.println("Enter the number of dishes");
+        int numberOfDishes = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        List<Dish> dishes = new ArrayList<>();
+        System.out.println("Enter the dish details");
+        for (int i = 0; i < numberOfDishes; i++) {
+            String[] details = scanner.nextLine().split(":");
+            dishes.add(new Dish(details[0], details[1], Double.parseDouble(details[2]), Double.parseDouble(details[3])));
+        }
+
+        System.out.println("Enter the cuisine");
+        String cuisine = scanner.nextLine();
+
+        List<Dish> filteredDishes = dishUtil.getDishesByCuisine(dishes.stream(), cuisine);
+        if (filteredDishes.isEmpty()) {
+            System.out.println("No dishes were found for the given cuisine " + cuisine);
+        } else {
+            System.out.println("Dishes of cuisine " + cuisine + " are");
+            filteredDishes.forEach(dish -> System.out.println(dish.toString()));
+        }
+
+        scanner.close();
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+This code will allow you to enter the number of dishes, their details, and then filter and display the dishes based on the specified cuisine. If no dishes are found for the given cuisine, it will print an appropriate message.
+
+Learn more
+
+1
+github.com
+You
+Sent by you:
+Dish Delight is a popular hotel platform designed to provide detailed information about each dish, including dish name, cuisine, price, and rating. The platform offers various functionalities using Java streams to enhance user experience. 
+
+Create a Java application that uses streams to perform the same task.
+
+Requirement:
+Retrieve the dish details by a specified cuisine.
+
+Component Specification: Dish (POJO Class)
+
+
+Type(Class)
+ 
+Attributes
+ 
+Methods
+ 
+
+Dish
+ 
+String dishName
+
+String cuisine
+
+double price
+
+double rating
+ 
+Getters and setters, toString, no-argument, and four-argument constructors are given in the code skeleton.
+ 
+
+
+
+
+Component Specification: DishUtil (Utility class)
+
+
+Type(Class)
+ 
+Methods
+ 
+Responsibilities
+ 
+
+DishUtil
+ 
+public List<Dish> getDishesByCuisine(Stream<Dish> dishStream, String cuisine)
+ 
+This method takes a stream of Dish objects and a cuisine as input parameters. It returns a list of dishes that belong to the specified cuisine by filtering the dishes from the provided stream.
+
+Condition:
+
+
+cuisine is case-insensitive
+ 
+
+
+
+
+The main method in the UserInterface class gets the total number of dishes and their details from the user, creates Dish objects, stores them in a list, and performs various operations based on user input.
+
+Get the cuisine from the user. Then invokes the getDishesByCuisine method in the DishUtil class to filter dishes by the specified cuisine. If dishes are found, they are displayed using the toString() method as shown in the sample output. If no dishes are found, it prints "No dishes were found for the given cuisine <cuisine>".
+
+Assumptions:
+The number of dishes needed to be entered into the list is always a valid positive number.
+The dish details provided by the user are always valid.
+
+Note:
+In the sample input / output provided, thehighlighted text in bold corresponds to the input given by the user, andthe rest of the text represents the output.
+Ensure to follow the object-oriented specifications provided in the question description. 
+Ensure to provide the names for classes, attributes, and methods as specified in the question description.
+Adhere to the code template, if provided.
+Do not use System.exit(0) toterminate the code.
+
+ 
+
+Sample Input / Output 1
+
+Enter the number of dishes
+
+5
+
+Enter the dish details
+
+Hamburger:American:8.50:4.5
+
+Paella:Spanish:16.00:4.7
+
+Dim Sum:Chinese:11.50:4.3
+
+Poutine:Canadian:7.99:4.1
+
+Souvlaki:Greek:10.99:4.6
+
+Enter the cuisine
+
+Chinese
+
+Dishes of cuisine Chinese are
+
+Dim Sum|Chinese|11.5|4.3
+
+ 
+
+Sample Input / Output 2
+
+Enter the number of dishes
+
+2
+
+Enter the dish details
+
+Tagine:Moroccan:15.50:4.5
+
+Schnitzel:German:13.50:4.4
+
+Enter the cuisine
+
+American
+
+No dishes were found for the given cuisine American
+Copilot
+Sent by Copilot:
+Sure, I can help you create a Java application that meets your requirements. Below is the implementation of the Dish class, DishUtil class, and the UserInterface class.
+
+Dish.java
+Java
+
+public class Dish {
+    private String dishName;
+    private String cuisine;
+    private double price;
+    private double rating;
+
+    // No-argument constructor
+    public Dish() {}
+
+    // Four-argument constructor
+    public Dish(String dishName, String cuisine, double price, double rating) {
+        this.dishName = dishName;
+        this.cuisine = cuisine;
+        this.price = price;
+        this.rating = rating;
+    }
+
+    // Getters and setters
+    public String getDishName() {
+        return dishName;
+    }
+
+    public void setDishName(String dishName) {
+        this.dishName = dishName;
+    }
+
+    public String getCuisine() {
+        return cuisine;
+    }
+
+    public void setCuisine(String cuisine) {
+        this.cuisine = cuisine;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return dishName + "|" + cuisine + "|" + price + "|" + rating;
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+DishUtil.java
+Java
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class DishUtil {
+    public List<Dish> getDishesByCuisine(Stream<Dish> dishStream, String cuisine) {
+        return dishStream
+                .filter(dish -> dish.getCuisine().equalsIgnoreCase(cuisine))
+                .collect(Collectors.toList());
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+UserInterface.java
+Java
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Stream;
+
+public class UserInterface {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        DishUtil dishUtil = new DishUtil();
+
+        System.out.println("Enter the number of dishes");
+        int numberOfDishes = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        List<Dish> dishes = new ArrayList<>();
+        System.out.println("Enter the dish details");
+        for (int i = 0; i < numberOfDishes; i++) {
+            String[] details = scanner.nextLine().split(":");
+            dishes.add(new Dish(details[0], details[1], Double.parseDouble(details[2]), Double.parseDouble(details[3])));
+        }
+
+        System.out.println("Enter the cuisine");
+        String cuisine = scanner.nextLine();
+
+        List<Dish> filteredDishes = dishUtil.getDishesByCuisine(dishes.stream(), cuisine);
+        if (filteredDishes.isEmpty()) {
+            System.out.println("No dishes were found for the given cuisine " + cuisine);
+        } else {
+            System.out.println("Dishes of cuisine " + cuisine + " are");
+            filteredDishes.forEach(dish -> System.out.println(dish.toString()));
+        }
+
+        scanner.close();
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+This code will allow you to enter the number of dishes, their details, and then filter and display the dishes based on the specified cuisine. If no dishes are found for the given cuisine, it will print an appropriate message.
+
+Learn more
+
+1
+
+github.com
+You
+Sent by you:
+GreenGrocery is a specialty store in the U.S. that sells a variety of products such as fruits, vegetables, dairy, snacks, and beverages. The goal of this store is to offer consumers high-quality organic products, with product weights ranging between 100 grams and 5000 grams.
+
+As a software consultant, you have been asked to automate the process of stock updates for all products within the specified weight range.
+
+
+The stock keeper will enter product details as a string input seperated by colon in the format - itemCode:itemCategory:itemWeight.
+
+
+The system must update the stock for products with weights between 100 grams and 5000 grams and confirm with "Stock successfully updated" for valid itemWeight. For products with weights greater than 5000 grams or less than 100 grams, the system must alert the stock keeper by throwing the exception with appropriate message "Invalid item weight".
+
+
+
+
+
+Consider the following scenario: 
+
+
+You receive input that includes the itemCode, itemCategory, itemWeight in the format of a string in the UserInterface class. 
+
+
+
+Component Specification: WeightValidatorUtil Class
+
+
+Component Name
+ 
+Type (Class)
+ 
+Methods
+ 
+Responsibilities
+ 
+
+ 
+
+To validate item weight
+ 
+ 
+
+ WeightValidatorUtil
+ 
+ 
+
+public boolean validateItemWeight(int itemWeight)
+ 
+ 
+
+This method checks whether the itemWeight is between 100 grams and 5000 grams (both inclusive). If yes, this method returns true. Else this method must throw the InvalidWeightException with the appropriate error message.
+ 
+
+Note: The class and methods should be declared as public.
+
+Assumption:
+
+
+ itemCode includes alphabets and digits.
+ Only valid item code is entered
+
+
+ Component Specification: InvalidWeightException Class (inherits Exception class)
+
+
+Type (Class)
+ 
+Responsibilities
+ 
+
+ 
+
+ InvalidWeightException
+ 
+Provided with a single-argument constructor: public InvalidWeightException( String message). Thrown when the itemWeight does not follow the below validation rules.
+ 
+
+
+
+
+In the UserInterface class, write the main method to get number of item entries, item details from the user as shown in the sample input. Split the input string to extract the product details and pass the itemWeight to the validateItemWeight method. Use a try-catch block to handle any exceptions returned by the validateItemWeight method. Based on the returned result (either true or an exception), display the appropriate message as shown in the sample output.
+
+
+
+
+
+Note: 
+
+In the Sample Input / Output provided, the highlighted text in bold corresponds to the input given by the user and the rest of the text represents the output.
+Ensure to follow the object-oriented specifications provided in the question.
+Ensure to provide the names for classes, attributes and methods as specified in the question.
+Adhere to the code template, if provided.
+Do not use System.exit(x) in the code.
+
+
+  
+
+Sample Input and Output 1
+
+
+
+
+Enter the number of item entries
+
+2
+
+Enter item 1 details
+
+T002:Tomatoes:150
+
+Stock successfully updated
+
+Enter item 2 details
+
+S003:Spinach:5000
+
+Stock successfully updated
+
+
+
+  
+
+Sample Input and Output 2
+
+
+
+
+Enter the number of item entries
+
+2
+
+Enter item 1 details
+
+
+B505:Beverages:3000
+
+Stock successfully updated
+
+
+Enter item 2 details
+
+
+V202:Vegetables:6000
+
+Invalid item weight
+Copilot
+Sent by Copilot:
+Sure, I can help you create a Java application that meets your requirements. Below is the implementation of the WeightValidatorUtil class, InvalidWeightException class, and the UserInterface class.
+
+WeightValidatorUtil.java
+Java
+
+public class WeightValidatorUtil {
+    public boolean validateItemWeight(int itemWeight) throws InvalidWeightException {
+        if (itemWeight >= 100 && itemWeight <= 5000) {
+            return true;
+        } else {
+            throw new InvalidWeightException("Invalid item weight");
+        }
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+InvalidWeightException.java
+Java
+
+public class InvalidWeightException extends Exception {
+    public InvalidWeightException(String message) {
+        super(message);
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+UserInterface.java
+Java
+
+import java.util.Scanner;
+
+public class UserInterface {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        WeightValidatorUtil validator = new WeightValidatorUtil();
+
+        System.out.println("Enter the number of item entries");
+        int numberOfItems = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        for (int i = 0; i < numberOfItems; i++) {
+            System.out.println("Enter item " + (i + 1) + " details");
+            String[] details = scanner.nextLine().split(":");
+            String itemCode = details[0];
+            String itemCategory = details[1];
+            int itemWeight = Integer.parseInt(details[2]);
+
+            try {
+                if (validator.validateItemWeight(itemWeight)) {
+                    System.out.println("Stock successfully updated");
+                }
+            } catch (InvalidWeightException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        scanner.close();
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+This code will allow you to enter the number of item entries, their details, and then validate and update the stock based on the specified weight range. If the item weight is outside the valid range, it will throw an InvalidWeightException and display the appropriate message.
+
+You
+Sent by you:
+GreenGrocery is a specialty store in the U.S. that sells a variety of products such as fruits, vegetables, dairy, snacks, and beverages. The goal of this store is to offer consumers high-quality organic products, with product weights ranging between 100 grams and 5000 grams.
+
+As a software consultant, you have been asked to automate the process of stock updates for all products within the specified weight range.
+
+
+The stock keeper will enter product details as a string input seperated by colon in the format - itemCode:itemCategory:itemWeight.
+
+
+The system must update the stock for products with weights between 100 grams and 5000 grams and confirm with "Stock successfully updated" for valid itemWeight. For products with weights greater than 5000 grams or less than 100 grams, the system must alert the stock keeper by throwing the exception with appropriate message "Invalid item weight".
+
+
+
+
+
+Consider the following scenario: 
+
+
+You receive input that includes the itemCode, itemCategory, itemWeight in the format of a string in the UserInterface class. 
+
+
+
+Component Specification: WeightValidatorUtil Class
+
+
+Component Name
+ 
+Type (Class)
+ 
+Methods
+ 
+Responsibilities
+ 
+
+ 
+
+To validate item weight
+ 
+ 
+
+ WeightValidatorUtil
+ 
+ 
+
+public boolean validateItemWeight(int itemWeight)
+ 
+ 
+
+This method checks whether the itemWeight is between 100 grams and 5000 grams (both inclusive). If yes, this method returns true. Else this method must throw the InvalidWeightException with the appropriate error message.
+ 
+
+Note: The class and methods should be declared as public.
+
+Assumption:
+
+
+ itemCode includes alphabets and digits.
+ Only valid item code is entered
+
+
+ Component Specification: InvalidWeightException Class (inherits Exception class)
+
+
+Type (Class)
+ 
+Responsibilities
+ 
+
+ 
+
+ InvalidWeightException
+ 
+Provided with a single-argument constructor: public InvalidWeightException( String message). Thrown when the itemWeight does not follow the below validation rules.
+ 
+
+
+
+
+In the UserInterface class, write the main method to get number of item entries, item details from the user as shown in the sample input. Split the input string to extract the product details and pass the itemWeight to the validateItemWeight method. Use a try-catch block to handle any exceptions returned by the validateItemWeight method. Based on the returned result (either true or an exception), display the appropriate message as shown in the sample output.
+
+
+
+
+
+Note: 
+
+In the Sample Input / Output provided, the highlighted text in bold corresponds to the input given by the user and the rest of the text represents the output.
+Ensure to follow the object-oriented specifications provided in the question.
+Ensure to provide the names for classes, attributes and methods as specified in the question.
+Adhere to the code template, if provided.
+Do not use System.exit(x) in the code.
+
+
+  
+
+Sample Input and Output 1
+
+
+
+
+Enter the number of item entries
+
+2
+
+Enter item 1 details
+
+T002:Tomatoes:150
+
+Stock successfully updated
+
+Enter item 2 details
+
+S003:Spinach:5000
+
+Stock successfully updated
+
+
+
+  
+
+Sample Input and Output 2
+
+
+
+
+Enter the number of item entries
+
+2
+
+Enter item 1 details
+
+
+B505:Beverages:3000
+
+Stock successfully updated
+
+
+Enter item 2 details
+
+
+V202:Vegetables:6000
+
+Invalid item weight
+Copilot
+Sent by Copilot:
+Sure, I can help you create a Java application that meets your requirements. Below is the implementation of the WeightValidatorUtil class, InvalidWeightException class, and the UserInterface class.
+
+WeightValidatorUtil.java
+Java
+
+public class WeightValidatorUtil {
+    public boolean validateItemWeight(int itemWeight) throws InvalidWeightException {
+        if (itemWeight >= 100 && itemWeight <= 5000) {
+            return true;
+        } else {
+            throw new InvalidWeightException("Invalid item weight");
+        }
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+InvalidWeightException.java
+Java
+
+public class InvalidWeightException extends Exception {
+    public InvalidWeightException(String message) {
+        super(message);
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+UserInterface.java
+Java
+
+import java.util.Scanner;
+
+public class UserInterface {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        WeightValidatorUtil validator = new WeightValidatorUtil();
+
+        System.out.println("Enter the number of item entries");
+        int numberOfItems = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        for (int i = 0; i < numberOfItems; i++) {
+            System.out.println("Enter item " + (i + 1) + " details");
+            String[] details = scanner.nextLine().split(":");
+            String itemCode = details[0];
+            String itemCategory = details[1];
+            int itemWeight = Integer.parseInt(details[2]);
+
+            try {
+                if (validator.validateItemWeight(itemWeight)) {
+                    System.out.println("Stock successfully updated");
+                }
+            } catch (InvalidWeightException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        scanner.close();
+    }
+}
+AI-generated code. Review and use carefully. More info on FAQ.
+This code will allow you to enter the number of item entries, their details, and then validate and update the stock based on the specified weight range. If the item weight is outside the valid range, it will throw an InvalidWeightException and display the appropriate message.
